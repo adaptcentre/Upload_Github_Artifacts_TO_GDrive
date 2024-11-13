@@ -199,7 +199,6 @@ async function main() {
         Buffer.from(credentials, 'base64').toString(),
     );
     const scopes = [
-        'https://www.googleapis.com/auth/drive',
         'https://www.googleapis.com/auth/drive.file',
     ];
     const auth = new google.auth.JWT(
