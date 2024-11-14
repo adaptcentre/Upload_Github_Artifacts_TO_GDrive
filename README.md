@@ -53,3 +53,6 @@ The email address of a user account that has access to the drive folder and will
 
 #### `override` (Optional):
 If set true, delete files with the same name before uploading.
+
+#### `depth` (Optional):
+Sets a maximum recursion depth for traversing and creating folders within the specified `child_folder`. Default is `15`. Adjust if needed to avoid cyclic structures or deep folder nesting.
