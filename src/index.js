@@ -75,7 +75,6 @@ function splitFolder(folder) {
  */
 async function getUploadFolderId(parentFolderId, childFolderPath, depth = 0) {
     const MAX_DEPTH = 15;
-    actions.info(`getUploadFolderId current depth - ${depth} childFolderPath: ${childFolderPath} parentFolderId: ${parentFolderId}`); 
 
     if (depth > MAX_DEPTH) {
         throw new Error(`Maximum folder traversal depth of ${MAX_DEPTH} reached, potential cyclic structure detected.`);
