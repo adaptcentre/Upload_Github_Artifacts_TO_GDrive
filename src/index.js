@@ -77,7 +77,7 @@ async function getUploadFolderId(parentFolderId, childFolderPath, depth = 0) {
     const MAX_DEPTH = 15;
 
     if (depth > MAX_DEPTH) {
-        throw new Error(`Maximum folder traversal depth of ${MAX_DEPTH} reached, potential cyclic structure detected.`);
+        throw new Error(`Maximum folder traversal depth of ${MAX_DEPTH} reached.`);
     }
 
     actions.debug(`parentFolderId: ${parentFolderId}`);
