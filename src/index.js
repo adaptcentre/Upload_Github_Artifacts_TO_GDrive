@@ -70,11 +70,19 @@ function splitFolder(folder) {
  *
  * @param {string} parentFolderId Id of the parent directory
  * @param {string | null} childFolderPath
+ * @param {number} depth Current recursion depth
  * @returns {Promise<string>}
  */
-async function getUploadFolderId(parentFolderId, childFolderPath) {
+async function getUploadFolderId(parentFolderId, childFolderPath, depth = 0) {
+    const MAX_DEPTH = 15;
+
+    if (depth > MAX_DEPTH) {
+        throw new Error(`Maximum folder traversal depth of ${MAX_DEPTH} reached.`);
+    }
+
     actions.debug(`parentFolderId: ${parentFolderId}`);
     actions.debug(`childFolderPath: ${childFolderPath}`);
+
     if (!childFolderPath) {
         // Empty or null: return parent id
         return parentFolderId;
@@ -103,7 +111,7 @@ async function getUploadFolderId(parentFolderId, childFolderPath) {
     if (files.length === 1) {
         actions.debug(`${currentFolder} exists inside ${parentFolderId}`);
         // Folder exists, check that folders children
-        return getUploadFolderId(files[0].id, remainingFolderPath);
+        return getUploadFolderId(files[0].id, remainingFolderPath, depth + 1);
     }
 
     actions.debug(`${currentFolder} does not exist inside ${parentFolderId}`);
@@ -123,7 +131,7 @@ async function getUploadFolderId(parentFolderId, childFolderPath) {
 
     actions.debug(`${currentFolder} id: ${currentFolderId}`);
 
-    return getUploadFolderId(currentFolderId, remainingFolderPath);
+    return getUploadFolderId(currentFolderId, remainingFolderPath, depth + 1);
 }
 
 /**
@@ -199,7 +207,6 @@ async function main() {
         Buffer.from(credentials, 'base64').toString(),
     );
     const scopes = [
-        'https://www.googleapis.com/auth/drive',
         'https://www.googleapis.com/auth/drive.file',
     ];
     const auth = new google.auth.JWT(

@@ -15,6 +15,10 @@ steps:
         parent_folder_id: <YOUR_DRIVE_FOLDER_ID>
 ```
 
+#### Note on maximum folder depth
+
+The maximum recursion depth is `15` for traversing and creating folders, to avoid cyclic structures or deep folder nesting within the specified `child_folder`.
+
 ### Inputs
 #### `target` (Required):
 Local path to the file to upload, can be relative from github runner current directory.
